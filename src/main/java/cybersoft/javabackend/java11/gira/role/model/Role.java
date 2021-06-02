@@ -11,7 +11,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.Data;
-
+//nhu ne
 @Data
 @Entity
 @Table(name = "role")
