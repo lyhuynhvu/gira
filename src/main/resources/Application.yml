@@ -1,0 +1,17 @@
+# Server configuration
+server:
+  port: 8080
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/gira
+    username: postgres
+    password: admin
+  jpa:
+    show-sql: true
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+gira:
+  app:
+    jwt-secret: cybersoftgiraapplication
+    jwt-duration: 86400000
