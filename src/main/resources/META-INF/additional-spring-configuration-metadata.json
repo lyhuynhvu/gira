@@ -1,0 +1,12 @@
+{"properties": [
+  {
+    "name": "gira.app.jwt-secret",
+    "type": "java.lang.String",
+    "description": "A description for 'gira.app.jwt-secret'"
+  },
+  {
+    "name": "gira.app.jwt-duration",
+    "type": "java.lang.String",
+    "description": "A description for 'gira.app.jwt-duration'"
+  }
+]}
