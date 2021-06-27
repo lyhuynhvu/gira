@@ -31,5 +31,5 @@ public class ProjectType extends AbstractEntity {
 	private String description;
 	
 	@OneToMany(mappedBy = "projectType", cascade = CascadeType.ALL)
-	private Set<Project> projects;
+	private Set<Project> projects; 
 }
