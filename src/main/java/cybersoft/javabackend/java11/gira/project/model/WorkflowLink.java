@@ -19,7 +19,7 @@ import lombok.Setter;
 public class WorkflowLink extends AbstractEntity {
 	private String transition;
 	
-	@ManyToOne(fetch = FetchType.LAZY) 
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "source")
 	private WorkflowNode source; // linkBy
 	

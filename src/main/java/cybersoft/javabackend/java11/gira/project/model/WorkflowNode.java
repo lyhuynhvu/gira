@@ -29,7 +29,7 @@ public class WorkflowNode extends AbstractEntity {
 	
 	private int nodeOrder;
 	
-	@ManyToOne(fetch = FetchType.LAZY) 
+	@ManyToOne(fetch = FetchType.LAZY)
 	@NotNull
 	private Workflow workflow;
 	

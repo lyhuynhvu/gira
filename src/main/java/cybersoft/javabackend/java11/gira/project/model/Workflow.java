@@ -27,7 +27,7 @@ public class Workflow extends AbstractEntity {
 	private String description;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	private Project project; 
+	private Project project;
 	
 	@OneToMany(mappedBy = "workflow", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<WorkflowNode> nodes;

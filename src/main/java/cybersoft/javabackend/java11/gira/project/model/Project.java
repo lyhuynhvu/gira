@@ -28,7 +28,7 @@ import lombok.Setter;
 public class Project extends AbstractEntity {
 	@NotBlank(message = "{project.name.not-blank}")
 	@Size(min = 3, max = 100, message = "{project.name.size}")
-	@Column(unique = true) 
+	@Column(unique = true)
 	private String name;
 	
 	@NotBlank(message = "{project.code.not-blank}")
