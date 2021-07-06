@@ -1,7 +1,8 @@
 package cybersoft.javabackend.java11.gira.project.model;
 
 import java.time.LocalDateTime;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -9,6 +10,8 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
@@ -24,6 +27,13 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
+@NamedEntityGraph(
+		name = "project-owner-manager",
+		attributeNodes = {
+				@NamedAttributeNode("owner"),
+				@NamedAttributeNode("manager")
+		}
+)
 @Table(name = "gira_project")
 public class Project extends AbstractEntity {
 	@NotBlank(message = "{project.name.not-blank}")
@@ -43,7 +53,7 @@ public class Project extends AbstractEntity {
 	
 	private LocalDateTime startDate;
 	private LocalDateTime endDate;
-
+	
 	// bidirectional
 	// ManyToOne, OneToMany, OneToOne: EAGER
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -59,5 +69,6 @@ public class Project extends AbstractEntity {
 	private ProjectType projectType;
 	
 	@OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
-	private Set<Workflow> workflows;
+	//@JsonIgnore
+	private List<Workflow> workflows = new ArrayList<>();
 }
