@@ -36,6 +36,24 @@ public class RoleGroupController {
 		return new ResponseEntity<>(groups, HttpStatus.OK);
 	}
 	
+	@GetMapping("/users")
+	public ResponseEntity<Object> findAllGroupsWithUsers(){
+		List<RoleGroup> groups = service.findAllWithUser();
+		
+		if(groups.isEmpty())
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		return new ResponseEntity<>(groups, HttpStatus.OK);
+	}
+	
+	@GetMapping("/roles")
+	public ResponseEntity<Object> findAllGroupsWithRoles(){
+		List<RoleGroup> groups = service.findAllWithRoles();
+		
+		if(groups.isEmpty())
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		return new ResponseEntity<>(groups, HttpStatus.OK);
+	}
+	
 	@PostMapping("")
 	public ResponseEntity<Object> saveRoleGroup(@Valid @RequestBody CreateRoleGroupDto dto,
 												BindingResult errors){
@@ -58,6 +76,15 @@ public class RoleGroupController {
 			return new ResponseEntity<Object>(errors.getAllErrors(), HttpStatus.BAD_REQUEST);
 		
 		RoleGroup updatedGroup = service.addRole(role, groupId);
+		
+		return new ResponseEntity<>(updatedGroup, HttpStatus.OK);
+	}
+	
+	@PutMapping("/{group-id}/{username}")
+	public ResponseEntity<Object> addUserToGroup(@PathVariable("username") String username,
+												@PathVariable("group-id") Long groupId){
+		
+		RoleGroup updatedGroup = service.addUser(username, groupId);
 		
 		return new ResponseEntity<>(updatedGroup, HttpStatus.OK);
 	}

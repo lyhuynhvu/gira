@@ -5,6 +5,9 @@ import java.lang.reflect.Method;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class MapDtoToModel<E extends Object, T extends Object> {
 	public T map(E dto, T model) {
 		Method[] dtoMethods = dto.getClass().getMethods(); 
@@ -26,13 +29,16 @@ public class MapDtoToModel<E extends Object, T extends Object> {
 				String modelSetter = getter.replaceFirst("get", "set");
 				
 				// get properties type
-				Class<?>[] classes = model.getClass().getMethod(modelSetter).getParameterTypes();
-				//classes[0].getClass() modelValue = (classes[0].getClass()) dtoValue;
+				Class<?> propertyType = model.getClass().getMethod(modelSetter, dtoValue.getClass()).getParameterTypes()[0];
+				
+				// call model's setter to set dtoValue to model 
+				model.getClass().getMethod(modelSetter, propertyType).invoke(model, propertyType.cast(dtoValue));
 				
 			} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException
 					| NoSuchMethodException | SecurityException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
+			} catch (NullPointerException ex) {
+				ex.printStackTrace();
 			}
 		}
 		

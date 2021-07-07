@@ -61,15 +61,17 @@ public class User extends AbstractEntity{
 	private String department;
 	private String hobbies;
 	
-	@ManyToMany(mappedBy = "users", fetch = FetchType.EAGER)
-	@JsonIgnore
+	@ManyToMany(mappedBy = "users", fetch = FetchType.LAZY)
+	//@JsonIgnore
 	private Set<RoleGroup> roleGroups = new HashSet<>();
 	
 	@OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
+	@JsonIgnore
 	private Set<Project> ownProjects = new HashSet<>();
 	
 	@OneToMany(mappedBy = "manager", cascade = CascadeType.ALL)
-	private Set<Project> managerProjects = new HashSet<>();
+	@JsonIgnore
+	private Set<Project> manageProjects = new HashSet<>();
 	
 	public User username(String username) {
 		this.username = username;
