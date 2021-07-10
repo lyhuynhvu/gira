@@ -3,7 +3,8 @@ package cybersoft.javabackend.java11.gira.project.controller;
 import java.util.List;
 
 import javax.validation.Valid;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -21,19 +22,36 @@ import cybersoft.javabackend.java11.gira.project.dto.CreateProjectDto;
 import cybersoft.javabackend.java11.gira.project.dto.UpdateProjectDto;
 import cybersoft.javabackend.java11.gira.project.model.Project;
 import cybersoft.javabackend.java11.gira.project.service.ift.ProjectService;
-import lombok.AllArgsConstructor;
 
 @RestController
 @RequestMapping("/api/project")
-@AllArgsConstructor
 public class ProjectController {
 	private ProjectService service;
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
+	
+	public ProjectController(ProjectService service) {
+		super();
+		this.service = service;
+	}
 	
 	@GetMapping("")
 	public ResponseEntity<Object> findAllProjects(){
+		logger.debug("======START FIND ALL PROJECTS======");
 		List<Project> projects = service.findAll();
+		logger.debug("======FETCHED PROJECTS======");
+		logger.debug("Results: {}", projects);
 		if(projects.isEmpty())
 			return ResponseHandler.getResponse("There is no data", HttpStatus.OK);
+		return ResponseHandler.getResponse(projects, HttpStatus.OK);
+	}
+
+	@GetMapping("/{type-id}")
+	public ResponseEntity<Object> findAllProjectByType(@PathVariable("type-id") Long typeId){
+		List<Project> projects = service.findAllByType(typeId);
+
+		if(projects.isEmpty())
+			return ResponseHandler.getResponse("There is no data.", HttpStatus.OK);
+
 		return ResponseHandler.getResponse(projects, HttpStatus.OK);
 	}
 	
